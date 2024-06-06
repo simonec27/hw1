@@ -1,13 +1,134 @@
+function onFiumeJson(json) {
+  console.log("Json annunci Arrivato");
+  console.log(json);
+
+  const contenitore = document.getElementById('banner3');
+
+  json.forEach(contenuto => {
+      const annuncio = document.createElement('div');
+      annuncio.classList.add('annuncio2');
+      contenitore.appendChild(annuncio);
+
+      const copertina = document.createElement('div');
+      copertina.classList.add('cornice');
+      annuncio.appendChild(copertina);
+
+      const img = document.createElement('img');
+      copertina.appendChild(img);
+
+      img.src = contenuto.copertina;
+      img.alt = contenuto.NomeAttrazione;
+
+      // Aggiungo titolo del prodotto
+      const titolo = document.createElement('h1');
+      titolo.classList.add('meta');
+      titolo.textContent = contenuto.NomeAttrazione;
+      annuncio.appendChild(titolo);
+      const preferito = document.createElement("button");
+      preferito.dataset.id = contenuto.id;
+      annuncio.appendChild(preferito);
+      preferito.classList.add("buttoncuore");
+      const cuore = document.createElement("img");
+      cuore.src = "img\\heart_icon-icons.com_72328.png";
+      cuore.classList.add('cuore');
+      preferito.appendChild(cuore);
+
+      function onCuoreClick(event) {
+        modalsection.classList.remove('hidden');
+        document.body.classList.add('noscroll');
+    }
+    
+    const prefs=document.querySelectorAll('.buttoncuore');
+    for(let pref of prefs){
+      pref.addEventListener('click',onCuoreClick);
+  }
+  });
+}
+
+function onFiumeResponse(response) {
+  console.log(response.status);
+  console.log('Risposta Arrivata');
+
+  if (!response.ok) {
+      console.log('Risposta non Valida');
+      return null;
+  } else {
+      return response.json();
+  }
+}
+
+fetch("AttrFiume.php").then(onFiumeResponse).then(onFiumeJson).catch(error => {
+  console.log('Errore durante il fetch:', error);
+});
+
+
+function onSantJson(json) {
+  console.log("Json annunci Arrivato");
+  console.log(json);
+
+  const contenitore = document.getElementById('banner2');
+
+  json.forEach(contenuto => {
+      const annuncio = document.createElement('div');
+      annuncio.classList.add('annuncio2');
+      contenitore.appendChild(annuncio);
+
+      const copertina = document.createElement('div');
+      copertina.classList.add('cornice');
+      annuncio.appendChild(copertina);
+
+      const img = document.createElement('img');
+      copertina.appendChild(img);
+
+      img.src = contenuto.copertina;
+      img.alt = contenuto.NomeAttrazione;
+
+      // Aggiungo titolo del prodotto
+      const titolo = document.createElement('h1');
+      titolo.classList.add('meta');
+      titolo.textContent = contenuto.NomeAttrazione;
+      annuncio.appendChild(titolo);
+      const preferito = document.createElement("button");
+      preferito.dataset.id = contenuto.id;
+      annuncio.appendChild(preferito);
+      preferito.classList.add("buttoncuore");
+      const cuore = document.createElement("img");
+      cuore.src = "img\\heart_icon-icons.com_72328.png";
+      cuore.classList.add('cuore');
+      preferito.appendChild(cuore);
+
+      function onCuoreClick(event) {
+        modalsection.classList.remove('hidden');
+        document.body.classList.add('noscroll');
+    }
+    
+    const prefs=document.querySelectorAll('.buttoncuore');
+    for(let pref of prefs){
+      pref.addEventListener('click',onCuoreClick);
+  }
+  });
+}
+
+function onSantResponse(response) {
+  console.log(response.status);
+  console.log('Risposta Arrivata');
+
+  if (!response.ok) {
+      console.log('Risposta non Valida');
+      return null;
+  } else {
+      return response.json();
+  }
+}
+
+fetch("AttrSantorini.php").then(onSantResponse).then(onSantJson).catch(error => {
+  console.log('Errore durante il fetch:', error);
+});
+
 function onCuoreClick(event) {
     modalsection.classList.remove('hidden');
     document.body.classList.add('noscroll');
 }
-
-const cuori = document.querySelectorAll(".cuore");
-
-cuori.forEach(cuore => {
-    cuore.addEventListener('click', onCuoreClick);
-})
 
 const login = document.querySelector('#login.black');
 login.addEventListener('click', onCuoreClick);

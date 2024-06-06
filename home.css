@@ -10,13 +10,22 @@ body{
 }
 
 .green{
-    position: absolute;
-    top: 8px;
-    left:80%;
-    width: 7%;
-    background-color:rgb(25, 202, 137);
-    padding: 6%;
-    border-radius: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 8px;
+        left:80%;
+        width: 15%;
+        height: 12%;
+        border-radius: 50%;
+        border: none;
+        background-color:rgb(25, 202, 137);
+}
+
+.green:hover{
+    cursor: pointer;
+    background-color:rgb(72, 241, 179);
 }
 
 .topnav{
@@ -582,17 +591,26 @@ a{
     height: 30%;
 }
 
-.cuore{
+.buttoncuore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 8px;
     left:80%;
-    width: 7%;
+    width: 15%;
+    height: 12%;
     background-color: white;
-    padding: 6%;
-    border-radius: 22px;
+    border-radius: 50%;
+    border: none;
 }
 
-.cuore:hover{
+.cuore{
+ width:80%;
+
+}
+
+.buttoncuore:hover{
     cursor: pointer;
     background-color:rgb(25, 202, 137);
 }
