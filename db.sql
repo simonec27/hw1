@@ -1,5 +1,5 @@
 Create DATABASE hw1;
-USE hw1:
+USE hw1;
 
 CREATE TABLE users (
     id integer primary key auto_increment,

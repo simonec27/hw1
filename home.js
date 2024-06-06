@@ -5,7 +5,7 @@ function onFiumeJson(json) {
   const contenitore = document.getElementById('banner3');
 
   json.forEach(contenuto => {
-      const annuncio = document.createElement('div');
+      const annuncio = document.createElement('a');
       annuncio.classList.add('annuncio2');
       contenitore.appendChild(annuncio);
 
@@ -19,7 +19,6 @@ function onFiumeJson(json) {
       img.src = contenuto.copertina;
       img.alt = contenuto.NomeAttrazione;
 
-      // Aggiungo titolo del prodotto
       const titolo = document.createElement('h1');
       titolo.classList.add('meta');
       titolo.textContent = contenuto.NomeAttrazione;
@@ -32,6 +31,10 @@ function onFiumeJson(json) {
       cuore.src = "img\\heart_icon-icons.com_72328.png";
       cuore.classList.add('cuore');
       preferito.appendChild(cuore);
+  });
+
+  annuncio.addEventListener('click', function() {
+    window.location.href = 'content.php?id=';
   });
 }
 
@@ -59,7 +62,7 @@ function onSantJson(json) {
   const contenitore = document.getElementById('banner2');
 
   json.forEach(contenuto => {
-      const annuncio = document.createElement('div');
+      const annuncio = document.createElement('a');
       annuncio.classList.add('annuncio2');
       contenitore.appendChild(annuncio);
 
@@ -104,6 +107,10 @@ function onSantJson(json) {
       for(let cuore of cuori) {
           cuore.addEventListener('click', onCuoreClick);
       }
+
+      annuncio.addEventListener('click', function() {
+        window.location.href = 'content.php?id=';
+      });
     }
 
 function onSantResponse(response) {

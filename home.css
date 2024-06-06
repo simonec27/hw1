@@ -591,6 +591,11 @@ a{
     height: 30%;
 }
 
+.annuncio2:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
+
 .buttoncuore{
     display: flex;
     justify-content: center;

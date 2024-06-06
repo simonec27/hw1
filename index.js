@@ -5,7 +5,7 @@ function onFiumeJson(json) {
   const contenitore = document.getElementById('banner3');
 
   json.forEach(contenuto => {
-      const annuncio = document.createElement('div');
+      const annuncio = document.createElement('a');
       annuncio.classList.add('annuncio2');
       contenitore.appendChild(annuncio);
 
@@ -42,6 +42,10 @@ function onFiumeJson(json) {
     for(let pref of prefs){
       pref.addEventListener('click',onCuoreClick);
   }
+
+  annuncio.addEventListener('click', function() {
+    window.location.href = 'content.php?id=';
+  });
   });
 }
 
@@ -69,7 +73,7 @@ function onSantJson(json) {
   const contenitore = document.getElementById('banner2');
 
   json.forEach(contenuto => {
-      const annuncio = document.createElement('div');
+      const annuncio = document.createElement('a');
       annuncio.classList.add('annuncio2');
       contenitore.appendChild(annuncio);
 
@@ -100,12 +104,17 @@ function onSantJson(json) {
       function onCuoreClick(event) {
         modalsection.classList.remove('hidden');
         document.body.classList.add('noscroll');
+        event.stopPropagation();
     }
     
     const prefs=document.querySelectorAll('.buttoncuore');
     for(let pref of prefs){
       pref.addEventListener('click',onCuoreClick);
   }
+
+  annuncio.addEventListener('click', function() {
+    window.location.href = 'content.php?id=';
+  });
   });
 }
 
