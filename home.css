@@ -134,11 +134,23 @@ body{
 
 .rightfc{
     display:flex;
-    height:100%;
     width: 16%;
     justify-content: flex-end;
     align-items: center;
     margin-right: 10%;
+}
+
+#profiloutente{
+    display: flex;
+    position:fixed;
+    flex-direction: column;
+    top: 55px;
+    justify-content: center;
+    width:12vw;
+    background-color: white;
+    padding: 1%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 
 .black{
@@ -388,7 +400,7 @@ body{
 
 .intbanner{
     font-size: 150%;
-    font-weight: 600;
+    font-weight: 700;
     margin: 3% 0% 0% 0%;
 }
 
@@ -580,7 +592,6 @@ a{
     margin:0px;
     justify-content: flex-start;
     padding-top: 2%;
-    
 }
 
 .annuncio2{
@@ -612,7 +623,6 @@ a{
 
 .cuore{
  width:80%;
-
 }
 
 .buttoncuore:hover{

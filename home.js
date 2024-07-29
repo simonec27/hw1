@@ -1,3 +1,21 @@
+function checkPreferiti(){
+  fetch('controllaPreferiti.php')
+    .then(response => response.json())
+    .then(preferiti => {
+      const preferitiSet = new Set(preferiti);
+      const bottoni=document.querySelectorAll('.buttoncuore');
+      for(let bottone of bottoni){
+        if (preferitiSet.has(bottone.dataset.id)) {
+          bottone.classList.remove('buttoncuore');
+          bottone.classList.add('green');
+        }
+      }
+    })
+    .catch(error => console.error('Errore nel recupero dei preferiti:', error));
+}
+
+document.addEventListener('DOMContentLoaded',checkPreferiti);
+
 function onFiumeJson(json) {
   console.log("Json annunci Arrivato");
   console.log(json);
@@ -6,6 +24,7 @@ function onFiumeJson(json) {
 
   json.forEach(contenuto => {
       const annuncio = document.createElement('a');
+      annuncio.href="content.php?id=" +contenuto.id;
       annuncio.classList.add('annuncio2');
       contenitore.appendChild(annuncio);
 
@@ -31,10 +50,6 @@ function onFiumeJson(json) {
       cuore.src = "img\\heart_icon-icons.com_72328.png";
       cuore.classList.add('cuore');
       preferito.appendChild(cuore);
-  });
-
-  annuncio.addEventListener('click', function() {
-    window.location.href = 'content.php?id=';
   });
 }
 
@@ -54,6 +69,15 @@ fetch("AttrFiume.php").then(onFiumeResponse).then(onFiumeJson).catch(error => {
   console.log('Errore durante il fetch:', error);
 });
 
+function fResponse(response){
+  console.log(response);
+  return response;
+}
+
+function fError(error){
+  console.log("Errore: ");
+  return error;
+}
 
 function onSantJson(json) {
   console.log("Json annunci Arrivato");
@@ -63,6 +87,7 @@ function onSantJson(json) {
 
   json.forEach(contenuto => {
       const annuncio = document.createElement('a');
+      annuncio.href="content.php?id=" +contenuto.id;
       annuncio.classList.add('annuncio2');
       contenitore.appendChild(annuncio);
 
@@ -76,11 +101,11 @@ function onSantJson(json) {
       img.src = contenuto.copertina;
       img.alt = contenuto.NomeAttrazione;
 
-      // Aggiungo titolo del prodotto
       const titolo = document.createElement('h1');
       titolo.classList.add('meta');
       titolo.textContent = contenuto.NomeAttrazione;
       annuncio.appendChild(titolo);
+      
       const preferito = document.createElement("button");
       preferito.dataset.id = contenuto.id;
       annuncio.appendChild(preferito);
@@ -90,28 +115,44 @@ function onSantJson(json) {
       cuore.classList.add('cuore');
       preferito.appendChild(cuore);
   });
+
        function onCuoreClick(event) {
-        const preferito = event.currentTarget;
-        if(preferito.classList.contains('green')){
-          preferito.classList.remove('green')
-          preferito.classList.add('buttoncuore');
-        }else{
-          preferito.classList.remove('buttoncuore');
-          preferito.classList.add('green');
-          
-        }
+        event.preventDefault();
+        preferito = event.currentTarget;
+
+        checkSession().then(isLoggedIn => {
+          if (isLoggedIn) {
+
+            const formData = new FormData();
+            
+            formData.append('id', preferito.dataset.id);
+
+              fetch("gestionePreferiti.php", {method: 'post', body: formData}).then(fResponse, fError);
+
+            if(preferito.classList.contains('green')){
+              preferito.classList.remove('green');
+              preferito.classList.add('buttoncuore');
+            }else{
+              preferito.classList.remove('buttoncuore');
+              preferito.classList.add('green');
+            }
+          } else {
+              const modalsection = document.querySelector('#modalsection');
+              modalsection.classList.remove('hidden');
+              document.body.classList.add('noscroll');
+          }
+      }).catch(error => {
+          console.error("Errore nella verifica della sessione:", error);
+      });
+
       }
       
       const cuori = document.querySelectorAll(".buttoncuore");
       
       for(let cuore of cuori) {
           cuore.addEventListener('click', onCuoreClick);
-      }
-
-      annuncio.addEventListener('click', function() {
-        window.location.href = 'content.php?id=';
-      });
     }
+  }
 
 function onSantResponse(response) {
   console.log(response.status);
@@ -127,43 +168,87 @@ function onSantResponse(response) {
 
 fetch("AttrSantorini.php").then(onSantResponse).then(onSantJson).catch(error => {
   console.log('Errore durante il fetch:', error);
-});
-
-function onLoginClick(event) {
-    modalsection.classList.remove('hidden');
-    document.body.classList.add('noscroll');
-}
+})
 
 const login = document.querySelector('#login.black');
 login.addEventListener('click', onLoginClick);
 
 function onExternalClick(event) {  
-    if (event.target == event.currentTarget) {
-        document.body.classList.remove('noscroll');
-        const modalsection = event.target;
-        modalsection.classList.add('hidden');
-    }
+  if (event.target == event.currentTarget) {
+      document.body.classList.remove('noscroll');
+      const modalsection = event.target;
+      modalsection.classList.add('hidden');
+  }
 }
 
 const sezioneesterna = document.querySelector('#modalsection');
 sezioneesterna.addEventListener('click', onExternalClick);
 
 function onXClick(event) {
-    document.body.classList.remove('noscroll'); 
-    const modalsection = document.querySelector('#modalsection');
-    modalsection.classList.add('hidden');
+  document.body.classList.remove('noscroll'); 
+  const modalsection = document.querySelector('#modalsection');
+  modalsection.classList.add('hidden');
 }
 
 const xinterna = document.querySelector('#closebutton');
 xinterna.addEventListener('click', onXClick);
 
+function checkSession() {
+  return fetch('auth2.php')
+      .then(response => response.text())  
+      .then(text => {
+          if (text=== '0') {
+            console.log("Nessuna Sessione");
+              return false;
+          } else {
+            console.log("Sessione"+text);
+              return true;
+          }
+      })
+      .catch(() => {
+          return false;
+      });
+}
+
+function onLoginClick(event) {
+  
+  const altretendine=document.querySelectorAll('#tendinaAltro,#tendinaRecensioni,#tendinaScopri');
+    for(let item of altretendine){
+        item.classList.add('hidden');
+    }
+
+      checkSession().then(isLoggedIn => {
+          if (isLoggedIn) {
+
+              const opzioniutente = document.querySelector('#profiloutente');
+              opzioniutente.classList.remove('hidden');
+          } else {
+
+              const modalsection = document.querySelector('#modalsection');
+              modalsection.classList.remove('hidden');
+              document.body.classList.add('noscroll');
+          }
+      }).catch(error => {
+          console.error("Errore nella verifica della sessione:", error);
+
+      });
+      
+  }
+
+const user = document.querySelector('#login.black');
+user.addEventListener('click', onLoginClick);
+
 function tendinaScopri(event) {
-    const altretendine=document.querySelectorAll('#tendinaAltro,#tendinaRecensioni');
+    const altretendine=document.querySelectorAll('#tendinaAltro,#tendinaRecensioni,#profiloutente');
     for(let item of altretendine){
         item.classList.add('hidden');
     }
     const tendina = document.querySelector('#tendinaScopri');
+    if(!tendina.classList.contains('hidden')){
+      tendina.classList.add('hidden');
+    }else{
     tendina.classList.remove('hidden');
+    }
     event.stopPropagation();
 }
 
@@ -171,12 +256,16 @@ const clickscopri=document.querySelector('#scopri');
 clickscopri.addEventListener('click', tendinaScopri);
 
 function tendinaRecensioni(event) {
-    const altretendine=document.querySelectorAll('#tendinaAltro,#tendinaScopri');
+    const altretendine=document.querySelectorAll('#tendinaAltro,#tendinaScopri,#profiloutente');
     for(let item of altretendine){
         item.classList.add('hidden');
     }
     const tendina = document.querySelector('#tendinaRecensioni');
+    if(!tendina.classList.contains('hidden')){
+      tendina.classList.add('hidden');
+    }else{
     tendina.classList.remove('hidden');
+    }
     event.stopPropagation();
 }
 
@@ -184,12 +273,16 @@ const clickrecensioni=document.querySelector('#recensioni');
 clickrecensioni.addEventListener('click', tendinaRecensioni);
 
 function tendinaAltro(event) {
-    const altretendine=document.querySelectorAll('#tendinaRecensioni,#tendinaScopri');
+    const altretendine=document.querySelectorAll('#tendinaRecensioni,#tendinaScopri,#profiloutente');
     for(let item of altretendine){
         item.classList.add('hidden');
     }
     const tendina = document.querySelector('#tendinaAltro');
+    if(!tendina.classList.contains('hidden')){
+      tendina.classList.add('hidden');
+    }else{
     tendina.classList.remove('hidden');
+    }
     event.stopPropagation();
 }
 
@@ -197,15 +290,14 @@ const clickaltro=document.querySelector('#altro');
 clickaltro.addEventListener('click', tendinaAltro);
 
 function onbodyclick(event){
-    const tendina=document.querySelectorAll('#tendinaAltro,#tendinaScopri,#tendinaRecensioni');
+    const tendina=document.querySelectorAll('#tendinaAltro,#tendinaScopri,#tendinaRecensioni,#profiloutente');
     for(let item of tendina){
-        if(item!=event.target){
             item.classList.add('hidden');
-        }
     }
 }
 
-document.body.addEventListener('click',onbodyclick);
+const main=document.querySelector('main');
+main.addEventListener('click',onbodyclick);
 
 function inthotel(event){
     const int=document.createElement('h1');

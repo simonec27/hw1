@@ -1,48 +1,48 @@
 <?php 
   require_once 'auth.php';
-  $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
   if ($userid = checkAuth()) {
+    $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
     $userid = mysqli_real_escape_string($conn, $userid);
-    $query = "SELECT * FROM users WHERE id = $userid";
-    $res_1 = mysqli_query($conn, $query);
-    $userinfo = mysqli_fetch_assoc($res_1);
-  }
+    $queryUtente = "SELECT * FROM users WHERE id = $userid";
+    $res_utente = mysqli_query($conn, $queryUtente);
+    $userinfo = mysqli_fetch_assoc($res_utente); 
 
-  $id_prod = $_GET['id'];
+    $queryPreferito = "SELECT c.NomeAttrazione, c.Città, c.copertina ,c.id
+          FROM contenuto c
+          JOIN preferiti p ON p.annuncio_id = c.id 
+          WHERE p.utente_id = $userid";
 
-  $sql = "SELECT c.NomeAttrazione, c.Città, c.copertina
-      FROM contenuto c
-      WHERE c.id = $id_prod";
-
-  $result = mysqli_query($conn, $sql);
-
-  $contenuto = null;
-  $immagine=null;
-  
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      if (!$contenuto) {
-          $contenuto = [
-          'NomeAttrazione' => $row['NomeAttrazione'],
-          'Città' => $row['Città'],
-          'copertina' => $row['copertina']
-        ];
-      }
-      $immagine = $contenuto['copertina'];
+    $resPreferito = mysqli_query($conn,$queryPreferito);
+    
+    $preferiti = [];
+    
+    while ($row = mysqli_fetch_assoc($resPreferito)) {
+    $preferiti[] = $row;
     }
+
+    mysqli_close($conn);
+
+  }
+  else {
+    header('Location: home.php');
+  exit;
   }
 ?>
 
 <!DOCTYPE html>
 <html>
 
+<?php 
+  
+  ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="content.css">
+    <link rel="stylesheet" href="preferiti.css">
 
-    <script src="content.js" defer></script>
+    <script src="preferiti.js" defer></script>
     
     <link rel="icon" type="image/png" href="img/Tripadvisor_logoset_solid_green.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -174,65 +174,59 @@
 
     <main>
 
-    <div class="contenutoannuncio">
+    <h1 class="intbanner">I tuoi preferiti</h1>
 
-      <div class="descr_annuncio">
-        <h1 class="intbanner">
-            <?php echo $contenuto['NomeAttrazione']; ?>
-            </h1>
-        <h2 class="subintbanner"><?php echo $contenuto['Città']; ?></h2>
-      </div>
+    <div class="contPreferiti">
 
-    <div class="immagineannuncio">
-          <?php
-              echo "<img src='$immagine'>";
-         ?>
-         <div class="prenotaora">Prenota la tua vacanza da sogno, basta un click. <br>
-         <a href="" class="yellow">Prenota ora</a>
-         </div>
-         
-      </div>
+    <?php if (count($preferiti) > 0){?>
 
-      </div>
-
-      <section id="modalsection" class="hidden">
-        <div id="close">
-            <a id="closebutton">
-                x
-            </a>
+    <?php for($i=0;$i<count($preferiti);$i++){ ?>
+    
+        <a href="content.php?id=<?php echo $preferiti[$i]['id']?>" class="preferito">
+                
+        <div>
+            
+        <div class="hidden">
+        
+            <?php echo $preferiti[$i]['id']?>
+        
         </div>
 
-        <section class="loginmod">
-            <div id="modallogo">
-                <img src="img/Tripadvisor_logoset_solid_green.svg">
-            </div>
+            <img src="<?php echo $preferiti[$i]['copertina']?>">
 
-            <h1 id="hmodal">
-                Accedi per scoprire il meglio di Tripadvisor.
-            </h1>
+            <h1 class="titoloPreferito">
+                <?php echo $preferiti[$i]['NomeAttrazione']?>
+        </h1>
 
-            <a href="login.php" class="linklog">
-                <img src="img/google.svg">
-                Continua con Google
-            </a>
+        <h2 class="cittàPreferito">
+        <?php echo $preferiti[$i]['Città']?>
+        </h2>
 
-            <a href="login.php" class="linklog">
-                <img src="img/mail.svg">
-                Continua con email
-            </a>
+        </div>
 
-            <footer id="modalfooter">
-                <div class="final">
-                    Continuando, accetti i Termini di utilizzo
-                    e confermi di aver letto la Normativa sulla privacy e sull'uso dei cookie.
-                </div>
-                <div class="final">
-                    Questo sito è protetto da reCAPTCHA e si applicano le Norme sulla
-                    privacy e i Termini di servizio di Google.
-                </div>
-            </footer>
-        </section>
-    </section>
+        <button class="removePref" data-id="<?php echo $preferiti[$i]['id']?>">
+            Rimuovi dai preferiti
+        </button>
+
+        </a>
+       
+    <?php }?>
+
+
+    <?php }
+    else{?>
+
+    <div class="contNoPref">
+        <h2 class="noPref">Nessun preferito presente.</h2>
+        <h3 class="subNoPref">Clicca sul cuore per salvare i tuoi annunci tra i preferiti.</h3>
+    </div>
+
+    <?php }?>
+
+    </div>
+
+    
+
 
     <footer id="primary">
 
@@ -323,5 +317,3 @@
 </main>
 
 </body>
-
-</html>

@@ -19,3 +19,11 @@ CREATE TABLE contenuto (
     Tipologia varchar(255),
     copertina varchar(255)
 ) Engine = InnoDB;
+
+CREATE TABLE preferiti (
+    id integer primary key auto_increment,
+    utente_id integer not null,
+    annuncio_id integer not null,
+    foreign key (annuncio_id) references contenuto(id),
+    foreign key (utente_id) references users(id)
+) Engine = InnoDB;

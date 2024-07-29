@@ -19,7 +19,6 @@
             $entry = mysqli_fetch_assoc($res);
             if (password_verify($_POST['password'], $entry['password'])) {
 
-                // Imposto una sessione dell'utente
                 $_SESSION["_agora_username"] = $entry['username'];
                 $_SESSION["_agora_user_id"] = $entry['id'];
                 header("Location: home.php");
@@ -56,12 +55,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 
-    <title>Tripadvisor</title>
+    <title>Tripadvisor - Login</title>
 </head>
 
 <body>
     <nav class="topnav">
-        <a href="index.php" id="logotopnav">
+        <a href="home.php" id="logotopnav">
             <img src="img/TripAdvisor_Logo.svg">
         </a>
     </nav>

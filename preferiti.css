@@ -1,0 +1,370 @@
+body{
+    font-family: "Urbanist", sans-serif;
+    font-weight: bold;
+    color:#000;
+    font-size: medium;
+    background-color: white;
+    justify-content: center;
+    margin: 0px;
+    z-index: 1;
+}
+
+.green{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 8px;
+        left:80%;
+        width: 15%;
+        height: 12%;
+        border-radius: 50%;
+        border: none;
+        background-color:rgb(25, 202, 137);
+}
+
+.green:hover{
+    cursor: pointer;
+    background-color:rgb(72, 241, 179);
+}
+
+.topnav{
+    display:flex;
+    height: 10vh;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top:0px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+}
+
+.hidden{
+    display: none !important;
+}
+
+#logotopnav{
+    width: auto;
+    height: 75%;
+    margin-left: 10vw;
+}
+
+#logotopnav img{
+    height: 100%;
+    width: 100%;
+}
+
+.centerfc{
+    display:flex;
+    height:100%;
+    width: 68%;
+    justify-content: center;
+    align-items: center;
+}
+
+.celleintestazione{
+    border-radius: 20px;
+    padding: 12px;
+    margin:1%;
+}
+
+.linklog{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    margin: 3% 0%;
+    padding: 2% 4%;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #000;
+}
+
+
+.linklog img{
+    position: relative;
+    left:-100px;
+    height: 3.4vh;
+    width: auto;
+}
+
+
+#viaggi.celleintestazione:hover{
+    text-decoration: underline;
+    opacity:0.8;
+    background-color: white;
+}
+
+#tendinaScopri{
+    display: flex;
+    position:fixed;
+    flex-direction: column;
+    top: 55px;
+    left:460px;
+    justify-content: center;
+    width:12vw;
+    background-color: white;
+    padding: 1%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.inttendina{
+    padding:4% 2%;
+}
+
+.inttendina:hover{
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+#tendinaRecensioni{
+    display: flex;
+    position:fixed;
+    flex-direction: column;
+    top: 55px;
+    left:660px;
+    width:12vw;
+    justify-content: center;
+    background-color: white;
+    padding: 1%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+#tendinaAltro{
+    display: flex;
+    position:fixed;
+    flex-direction: column;
+    top: 55px;
+    left:770px;
+    width:12vw;
+    justify-content: center;
+    background-color: white;
+    padding: 1%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+
+.celleintestazione:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.rightfc{
+    display:flex;
+    width: 16%;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 10%;
+}
+
+#profiloutente{
+    display: flex;
+    position:fixed;
+    flex-direction: column;
+    top: 55px;
+    justify-content: center;
+    width:12vw;
+    background-color: white;
+    padding: 1%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.black{
+    background-color:black;
+    color: white;
+    border-radius: 20px;
+    padding: 12px;
+}
+
+.black:hover{
+    background-color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+a{
+    color: #000;
+    text-decoration: none;
+}
+
+.intbanner{
+    font-size: 150%;
+    font-weight: 800;
+    margin:14vh 10vw 0vh 10vw;
+}
+
+.contPreferiti{
+    display: flex;
+    margin: 2vh 10vw 6vh 10vw;
+    padding-top: 1%;
+    border-top: 1px solid black;
+    flex-wrap: wrap;
+}
+
+.preferito{
+    display: flex;
+    padding: 1%;
+    flex-direction: column;
+    justify-content: space-between;
+    width:16vw;
+    margin:1%;
+}
+
+.preferito:hover{
+    background-color: #f7f7f7;
+}
+
+.preferito img{
+    width:100%;
+    height: auto;
+}
+
+.titoloPreferito{
+    font-weight: 700;
+    font-size: 110%;
+    color: black;
+    margin:0px;
+    padding-top: 3%;
+}
+
+.cittàPreferito{
+    font-weight: 500;
+    font-size: 100%;
+    color: black;
+    margin:0px;
+    padding-top: 3%;
+}
+
+.removePref{
+    font-family: "Urbanist", sans-serif;
+    background-color: transparent;
+    border:none;
+    font-weight: 400;
+    font-size: 100%;
+    color: gray;
+    margin-top: 6%;
+    text-decoration: underline;
+}
+
+.removePref:hover{
+    color: black;
+    cursor: pointer;
+}
+
+.noPref{
+    display: block;
+    font-weight: 600;
+    margin:4vh 0vh 0vh 0vh;
+}
+
+.subNoPref{
+    font-weight: 400;
+    margin-top: 1vh;
+}
+
+#primary{
+    height: 50vh;
+    background-color: #eeeced;
+    padding: 2% 0%;
+}
+
+.first{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.others{
+    font-size: 14px;
+    font-weight: 500;
+    margin:4% 4% 0% 0%
+}
+
+.footcontainer{
+    display: flex;
+    margin: 1% 10%;
+    justify-content: space-between;
+    height: 55%;
+}
+
+.fc2{
+    display: flex;
+    margin: 0% 10%;
+}
+
+.others2{
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.fc2 img{
+    height: 40px;
+}
+
+.hflex{
+    margin: 0%;
+    font-size: 12px;
+    font-weight: 400;
+    padding:0px;
+}
+
+.linkfccontainer{
+    display: flex;
+    width: 70%;
+    margin-top: 0%;
+    margin-left: 1%;
+    flex-direction: column;
+}
+
+.linkfc{
+    display: flex;
+    justify-content: space-between;
+}
+
+.logocontainer{
+    display: flex;
+    height:100%;
+    width: 30vw;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.noscroll{
+    overflow: hidden;
+}
+
+
+.logocontainer img{
+    width: auto;
+    height: 25px;
+    margin-left: 2vw;
+}
+
+.logocontainer img:hover{
+    opacity: 0.8;
+}
+
+.collegamentiend{
+    display: flex;
+    flex-direction: column;
+    height: 25vh;
+}
+
+.finalfc{
+    display: flex;
+    height:50px;
+    margin:0% 10%;
+    justify-content: space-between;
+}
+
+.final{
+    display: flex;
+    width:100%;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 400;
+}

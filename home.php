@@ -1,5 +1,20 @@
+<?php 
+  require_once 'auth.php';
+  if ($userid = checkAuth()) {
+    $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
+    $userid = mysqli_real_escape_string($conn, $userid);
+    $query = "SELECT * FROM users WHERE id = $userid";
+    $res_1 = mysqli_query($conn, $query);
+    $userinfo = mysqli_fetch_assoc($res_1); 
+  }
+?>
+
 <!DOCTYPE html>
 <html>
+
+<?php 
+  
+  ?>
 
 <head>
     <meta charset="UTF-8">
@@ -102,12 +117,42 @@
 
         <div class="rightfc">
             <a id= "valuta" class="celleintestazione"> </a>
-            <a href="logout.php" id="login" class="black">Logout</a>
+            <a id="login" class="black">
+                
+                <?php 
+                
+                if ($userid = checkAuth()) {
+                
+                    echo $userinfo['username'];
+                }else {
+
+                    echo "Accedi";
+
+                }
+                ?>
+                
+                </a>
+                
+            <div id="profiloutente" class="hidden">
+                
+                <div class="inttendina">
+                    <a href="preferiti.php">
+                    Preferiti
+                    </a>
+                </div>
+                
+                <div class="inttendina">
+                    <a href="logout.php" id="tendinautente" >
+                        Logout
+                    </a>
+                </div>
+
+            </div>
         </div>
 
     </nav>
 
-    <header>
+    <main><header>
             <h1 class="welcome">Dove vuoi andare?
             </h1>
 
@@ -507,6 +552,8 @@
         </div>
 
     </footer>
+
+    </main>
 
 </body>
 
