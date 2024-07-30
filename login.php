@@ -1,7 +1,7 @@
 <?php
     include 'auth.php';
     if (checkAuth()) {
-        header('Location: home.php');
+        header('Location: index.php');
         exit;
     }
 
@@ -21,7 +21,7 @@
 
                 $_SESSION["_agora_username"] = $entry['username'];
                 $_SESSION["_agora_user_id"] = $entry['id'];
-                header("Location: home.php");
+                header("Location: index.php");
                 mysqli_free_result($res);
                 mysqli_close($conn);
                 exit;
@@ -60,7 +60,7 @@
 
 <body>
     <nav class="topnav">
-        <a href="home.php" id="logotopnav">
+        <a href="index.php" id="logotopnav">
             <img src="img/TripAdvisor_Logo.svg">
         </a>
     </nav>

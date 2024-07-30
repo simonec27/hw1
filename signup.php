@@ -2,7 +2,7 @@
     require_once 'auth.php';
 
     if (checkAuth()) {
-        header("Location: home.php");
+        header("Location: index.php");
         exit;
     }   
 
@@ -56,7 +56,7 @@
                 $_SESSION["_agora_username"] = $_POST["username"];
                 $_SESSION["_agora_user_id"] = mysqli_insert_id($conn);
                 mysqli_close($conn);
-                header("Location: home.php");
+                header("Location: index.php");
                 exit;
             } else {
                 $error[] = "Errore di connessione al Database";
@@ -89,7 +89,7 @@
     </head>
     <body>
     <nav class="topnav">
-        <a href="home.php" id="logotopnav">
+        <a href="index.php" id="logotopnav">
             <img src="img/TripAdvisor_Logo.svg">
         </a>
     </nav>

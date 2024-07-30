@@ -24,7 +24,7 @@
 
   }
   else {
-    header('Location: home.php');
+    header('Location: index.php');
   exit;
   }
 ?>
@@ -55,7 +55,7 @@
 
 <body>
     <nav class="topnav">
-        <a href="home.php" id="logotopnav">
+        <a href="index.php" id="logotopnav">
             <img src="img/TripAdvisor_Logo.svg">
         </a>
 
